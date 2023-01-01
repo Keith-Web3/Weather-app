@@ -1,0 +1,15 @@
+@use '../_resets';
+
+.button-component {
+  display: block;
+  appearance: none;
+  font-family: inherit;
+  border: none;
+  padding: 0.65em 1.1em;
+  cursor: pointer;
+  color: #fff;
+
+  img {
+    width: 20px;
+  }
+}

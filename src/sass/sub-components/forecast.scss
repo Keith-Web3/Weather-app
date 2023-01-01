@@ -1,0 +1,18 @@
+.forecast {
+  background-color: #1e213a;
+  padding: 1em;
+  gap: 1em;
+  display: flex;
+  flex-direction: column;
+
+  img {
+    width: 70%;
+    margin-inline: auto;
+  }
+  &__temperature {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+  }
+}

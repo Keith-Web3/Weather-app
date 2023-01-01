@@ -1,0 +1,6 @@
+.forecasts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1em;
+  padding: 0.5em;
+}

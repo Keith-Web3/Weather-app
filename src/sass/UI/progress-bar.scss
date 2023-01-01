@@ -1,0 +1,16 @@
+.progress-bar {
+  p {
+    &:first-child {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    &:last-child {
+      text-align: end;
+    }
+  }
+  div {
+    height: 10px;
+    border-radius: 8px;
+  }
+}

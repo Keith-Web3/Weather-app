@@ -1,0 +1,18 @@
+.highlight {
+  background-color: #1e213a;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  padding: 1em;
+
+  &__value {
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: #e7e7eb;
+  }
+  &__unit {
+    font-weight: 500;
+    font-size: 1.5rem;
+    color: #e7e7eb;
+  }
+}

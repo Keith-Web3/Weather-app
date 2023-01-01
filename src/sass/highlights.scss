@@ -1,0 +1,12 @@
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr));
+  gap: 1.5em;
+  &__text {
+    text-align: start;
+    color: #e7e7eb;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-block: 2em 1em;
+  }
+}
