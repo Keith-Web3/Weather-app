@@ -4,6 +4,9 @@ const currentData = React.createContext({
   loc: [],
   weatherData: {},
   forecast: [],
+  showModal: false,
+  inputLocation: [],
+  updateInputLocation: () => {},
 })
 
 export function CurrentPosition(props) {
@@ -12,7 +15,15 @@ export function CurrentPosition(props) {
     weatherInfo: {},
     forecast: [],
   })
+  const [inputLocation, setInputLocation] = useState([])
+  const [causeRerender, setCauseRerender] = useState(0)
+  const [showModal, setShowModal] = useState(false)
+  function updateInputLocation(val) {
+    return () => setInputLocation(val)
+  }
+  setTimeout(() => console.log(inputLocation), 2000)
   useEffect(() => {
+    console.log(inputLocation)
     navigator.geolocation.getCurrentPosition(
       function ({ coords: { latitude, longitude } }) {
         const options = {
@@ -25,7 +36,9 @@ export function CurrentPosition(props) {
         }
 
         fetch(
-          `https://aerisweather1.p.rapidapi.com/observations/${latitude},${longitude}`,
+          `https://aerisweather1.p.rapidapi.com/observations/${
+            inputLocation?.[0] || latitude
+          },${inputLocation?.[1] || longitude}`,
           options
         )
           .then(response => {
@@ -66,7 +79,9 @@ export function CurrentPosition(props) {
           )
           .then(() =>
             fetch(
-              `https://aerisweather1.p.rapidapi.com/forecasts/${latitude},${longitude}`,
+              `https://aerisweather1.p.rapidapi.com/forecasts/${
+                inputLocation?.[0] || latitude
+              },${inputLocation?.[1] || longitude}`,
               options
             )
           )
@@ -83,14 +98,19 @@ export function CurrentPosition(props) {
               ...prevData,
               forecast: arr,
             }))
+            setShowModal(false)
           })
           .catch(err => console.error(err))
       },
       function (error) {
-        console.log(error)
+        setShowModal(true)
       }
     )
-  }, [JSON.stringify(currentLocationData)])
+  }, [
+    JSON.stringify(currentLocationData),
+    causeRerender,
+    JSON.stringify(inputLocation),
+  ])
   return (
     <currentData.Provider
       value={{
@@ -99,6 +119,10 @@ export function CurrentPosition(props) {
           currentLocationData.city?.slice(1),
         weatherData: currentLocationData.weatherInfo,
         forecast: currentLocationData.forecast,
+        showModal: showModal,
+        reRender: () => setCauseRerender(prevVal => prevVal + 1),
+        inputLocation,
+        updateInputLocation,
       }}
     >
       {props.children}

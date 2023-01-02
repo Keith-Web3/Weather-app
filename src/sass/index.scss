@@ -3,6 +3,7 @@
 
 body {
   font-family: 'Raleway', 'Nunito', Verdana, Geneva, Tahoma, sans-serif;
+  position: relative;
 }
 .section--1 {
   padding: v.$spacer;
@@ -21,4 +22,45 @@ body {
 .section--2 {
   background-color: #100e1d;
   padding: 1em;
+}
+#root {
+  main {
+    @media (min-width: 720px) {
+      display: grid;
+      grid-template-columns: minmax(max-content, 400px) 1fr;
+      grid-template-areas: 'one two';
+
+      .navigation,
+      .section--1 {
+        grid-area: one;
+      }
+      .section--2 {
+        grid-area: two;
+        & > * {
+          max-width: 800px;
+          margin-inline: auto;
+        }
+      }
+    }
+  }
+}
+#modal-root {
+  .modal {
+    position: absolute;
+    inset: 0;
+  }
+}
+@media (min-width: 720px) {
+  .section--1 {
+    display: flex !important;
+    flex-direction: column;
+
+    .date {
+      margin-top: auto;
+    }
+    .condition,
+    .temperature {
+      margin-top: auto;
+    }
+  }
 }

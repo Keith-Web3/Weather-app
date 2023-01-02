@@ -6,6 +6,7 @@ export default function CurrentConditions({
   weatherCondition,
   location,
   handleShowNav,
+  showNav,
 }) {
   if (weatherCondition === undefined) return //prevent importing an undefined path. Cause of internal react error WARNING
   const [weatherImg, setWeatherImg] = useState('')
@@ -17,7 +18,7 @@ export default function CurrentConditions({
     )
   }, [])
   return (
-    <section className="section--1">
+    <section className="section--1" style={{ display: showNav[1] }}>
       <Header handleShowNav={handleShowNav} />
       <img src={weatherImg} alt="current weather condition" />
       <PresentDetails location={location} />

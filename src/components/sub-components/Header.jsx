@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Button from '../UI/Button'
 import locationImg from '../../assets/location-crosshairs-solid.svg'
 import '../../sass/sub-components/header.scss'
+import { currentData } from '../../store/CurrentPosition'
 
 const buttonStyles = {
   backgroundColor: '#6E707A',
@@ -15,12 +16,13 @@ const imgButtonStyles = {
 }
 
 export default function Header({ handleShowNav }) {
+  const ctx = useContext(currentData)
   return (
     <div className="header">
       <Button extraStyles={buttonStyles} onClick={handleShowNav}>
         Search for places
       </Button>
-      <Button extraStyles={imgButtonStyles}>
+      <Button extraStyles={imgButtonStyles} onClick={ctx.reRender}>
         <img src={locationImg} alt="location" />
       </Button>
     </div>
