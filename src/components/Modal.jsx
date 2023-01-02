@@ -3,6 +3,7 @@ import Button from './UI/Button'
 import '../sass/modal.scss'
 
 export default function Modal({ children, eventlisteners, show }) {
+  window.scrollTo(0, 0)
   return (
     <div className="modal">
       <div className="modal__backdrop"></div>

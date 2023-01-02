@@ -14,6 +14,10 @@ export default function App() {
   function handleShowNav() {
     setShowNav(prevVal => !prevVal)
   }
+  document.body.style.overflowY = ctx.showModal ? 'hidden' : 'unset'
+  document.querySelector('html').style.overflowY = ctx.showModal
+    ? 'hidden'
+    : 'unset'
 
   return (
     <main>

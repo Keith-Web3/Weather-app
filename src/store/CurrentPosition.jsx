@@ -16,12 +16,12 @@ export function CurrentPosition(props) {
     forecast: [],
   })
   const [inputLocation, setInputLocation] = useState([])
+  const [causeRerender, setCauseRerender] = useState(0)
   const [showModal, setShowModal] = useState(false)
   function updateInputLocation(val) {
     return () => setInputLocation(val)
   }
   useEffect(() => {
-    console.log(inputLocation)
     navigator.geolocation.getCurrentPosition(
       function ({ coords: { latitude, longitude } }) {
         const options = {
@@ -104,7 +104,11 @@ export function CurrentPosition(props) {
         setShowModal(true)
       }
     )
-  }, [JSON.stringify(currentLocationData), JSON.stringify(inputLocation)])
+  }, [
+    JSON.stringify(currentLocationData),
+    causeRerender,
+    JSON.stringify(inputLocation),
+  ])
   return (
     <currentData.Provider
       value={{
@@ -114,7 +118,10 @@ export function CurrentPosition(props) {
         weatherData: currentLocationData.weatherInfo,
         forecast: currentLocationData.forecast,
         showModal: showModal,
-        reRender: () => setInputLocation([]),
+        reRender: () => {
+          setCauseRerender(prevVal => prevVal + 1)
+          setInputLocation([])
+        },
         inputLocation: inputLocation,
         updateInputLocation: updateInputLocation,
       }}

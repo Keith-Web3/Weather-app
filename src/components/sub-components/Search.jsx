@@ -12,6 +12,10 @@ export default function Search({ placeholder }) {
   const [input, setInput] = useState('')
   const reference = useRef(document.getElementById('search'))
   const [showWarning, setShowWarning] = useState(false)
+  document.body.style.overflowY = showWarning ? 'hidden' : 'unset'
+  document.querySelector('html').style.overflowY = showWarning
+    ? 'hidden'
+    : 'unset'
   function handleChange(e) {
     setInput(e.target.value)
   }
