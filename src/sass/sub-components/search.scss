@@ -1,0 +1,11 @@
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+
+  label,
+  button {
+    flex-shrink: 1;
+  }
+}
