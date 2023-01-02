@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react'
 import Header from './sub-components/Header'
 import PresentDetails from './sub-components/PresentDetails'
 
-export default function CurrentConditions({ weatherCondition, location }) {
+export default function CurrentConditions({
+  weatherCondition,
+  location,
+  handleShowNav,
+}) {
+  if (weatherCondition === undefined) return //prevent importing an undefined path. Cause of internal react error WARNING
   const [weatherImg, setWeatherImg] = useState('')
   useEffect(() => {
     import(`../assets/${weatherCondition}.png`).then(
@@ -13,7 +18,7 @@ export default function CurrentConditions({ weatherCondition, location }) {
   }, [])
   return (
     <section className="section--1">
-      <Header />
+      <Header handleShowNav={handleShowNav} />
       <img src={weatherImg} alt="current weather condition" />
       <PresentDetails location={location} />
     </section>

@@ -1,0 +1,35 @@
+.navigation {
+  background-color: #1e213a;
+  min-height: 100dvh;
+  padding: 1em;
+
+  & > img {
+    width: 15px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-bottom: 1em;
+  }
+  label {
+    position: relative;
+
+    img {
+      position: absolute;
+      width: 1rem;
+      inset: 50% auto auto 1em;
+      transform: translateY(-50%);
+      background-color: #1e213a;
+    }
+    input {
+      background-color: transparent;
+      border: 1px solid #e7e7eb;
+      color: #616475;
+      padding: 0.65em 1.1em;
+      text-align: center;
+      outline: none;
+
+      &::placeholder {
+        color: #616475;
+      }
+    }
+  }
+}

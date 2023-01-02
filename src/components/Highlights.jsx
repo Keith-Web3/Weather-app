@@ -4,12 +4,11 @@ import WindDirection from './UI/WindDirection'
 import Highlight from './sub-components/Highlight'
 import '../sass/highlights.scss'
 import { nanoid } from 'nanoid'
-import { currentData } from '../context/CurrentPosition'
+import { currentData } from '../store/CurrentPosition'
 
 export default function Highlights() {
   const ctx = useContext(currentData)
   if (!ctx.loc) return
-  console.log(ctx.weatherInfo)
 
   const DUMMY_DATA = [
     {

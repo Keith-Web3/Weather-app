@@ -14,10 +14,12 @@ const imgButtonStyles = {
   padding: '0.4em',
 }
 
-export default function Header() {
+export default function Header({ handleShowNav }) {
   return (
     <div className="header">
-      <Button extraStyles={buttonStyles}>Search for places</Button>
+      <Button extraStyles={buttonStyles} onClick={handleShowNav}>
+        Search for places
+      </Button>
       <Button extraStyles={imgButtonStyles}>
         <img src={locationImg} alt="location" />
       </Button>

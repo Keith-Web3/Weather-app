@@ -1,20 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Forecast from './sub-components/Forecast'
 import '../sass/forecasts.scss'
 import { nanoid } from 'nanoid'
+import { currentData } from '../store/CurrentPosition'
 
-const DUMMY_DATA = [
-  { img: 'Hail', temp1: 16, temp2: 11 },
-  { img: 'HeavyCloud', temp1: 16, temp2: 11 },
-  { img: 'HeavyRain', temp1: 16, temp2: 11 },
-  { img: 'LightCloud', temp1: 16, temp2: 11 },
-  { img: 'LightRain', temp1: 16, temp2: 11 },
-  // { img: 'Shower', temp1: 16, temp2: 11 },
-  // { img: 'Sleet', temp1: 16, temp2: 11 },
-  // { img: 'Snow', temp1: 16, temp2: 11 },
-  // { img: 'Thunderstorm', temp1: 16, temp2: 11 },
-]
 export default function Forecasts() {
+  const { forecast } = useContext(currentData)
+  const DUMMY_DATA = forecast.map(([temp2, temp1, img]) => ({
+    img,
+    temp1,
+    temp2,
+  }))
   return (
     <div className="forecasts">
       {DUMMY_DATA.map((data, idx) => (

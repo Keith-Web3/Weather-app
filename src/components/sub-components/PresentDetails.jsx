@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import locationImg from '../../assets/location-dot-solid.svg'
-import { currentData } from '../../context/CurrentPosition'
+import { currentData } from '../../store/CurrentPosition'
 import '../../sass/sub-components/present-details.scss'
 
 export default function PresentDetails({ location }) {
@@ -12,7 +12,7 @@ export default function PresentDetails({ location }) {
         <span>{ctx.weatherData.tempC}</span>
         <span>℃</span>
       </p>
-      <p className="condition">{ctx.weatherData.weatherShort}</p>
+      <p className="condition">{ctx.weatherData.weatherInfo}</p>
       <p className="date">
         Today <span>•</span> {date}
       </p>
