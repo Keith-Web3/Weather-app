@@ -32,7 +32,7 @@ export default function App() {
         <Highlights />
         {ctx.showModal &&
           ReactDOM.createPortal(
-            <Modal eventlisteners={[null, ctx.reRender]}>
+            <Modal eventlisteners={[null, ctx.reRender]} show={false}>
               Please enable location to use this app
             </Modal>,
             document.getElementById('modal-root')

@@ -16,12 +16,10 @@ export function CurrentPosition(props) {
     forecast: [],
   })
   const [inputLocation, setInputLocation] = useState([])
-  const [causeRerender, setCauseRerender] = useState(0)
   const [showModal, setShowModal] = useState(false)
   function updateInputLocation(val) {
     return () => setInputLocation(val)
   }
-  setTimeout(() => console.log(inputLocation), 2000)
   useEffect(() => {
     console.log(inputLocation)
     navigator.geolocation.getCurrentPosition(
@@ -30,7 +28,7 @@ export function CurrentPosition(props) {
           method: 'GET',
           headers: {
             'X-RapidAPI-Key':
-              '68ca7f80e9mshdaca8240d43ab1ap178984jsn99d2a212d1c9',
+              'a8909ebcecmsha47cd12ec719822p1f3634jsn6d53c4255e42',
             'X-RapidAPI-Host': 'aerisweather1.p.rapidapi.com',
           },
         }
@@ -106,11 +104,7 @@ export function CurrentPosition(props) {
         setShowModal(true)
       }
     )
-  }, [
-    JSON.stringify(currentLocationData),
-    causeRerender,
-    JSON.stringify(inputLocation),
-  ])
+  }, [JSON.stringify(currentLocationData), JSON.stringify(inputLocation)])
   return (
     <currentData.Provider
       value={{
@@ -120,9 +114,9 @@ export function CurrentPosition(props) {
         weatherData: currentLocationData.weatherInfo,
         forecast: currentLocationData.forecast,
         showModal: showModal,
-        reRender: () => setCauseRerender(prevVal => prevVal + 1),
-        inputLocation,
-        updateInputLocation,
+        reRender: () => setInputLocation([]),
+        inputLocation: inputLocation,
+        updateInputLocation: updateInputLocation,
       }}
     >
       {props.children}
