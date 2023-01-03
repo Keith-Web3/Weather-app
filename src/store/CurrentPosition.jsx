@@ -28,7 +28,7 @@ export function CurrentPosition(props) {
           method: 'GET',
           headers: {
             'X-RapidAPI-Key':
-              'a8909ebcecmsha47cd12ec719822p1f3634jsn6d53c4255e42',
+              '8f091fb8d1mshafae696642602e9p120e55jsnf8db7eeec3a5',
             'X-RapidAPI-Host': 'aerisweather1.p.rapidapi.com',
           },
         }
@@ -43,38 +43,36 @@ export function CurrentPosition(props) {
             if (!response.ok) throw new Error('Try again')
             return response.json()
           })
-          .then(
-            ({
-              response: {
-                place: { city },
-                ob: {
-                  dewpointC,
-                  tempC,
-                  humidity,
-                  pressureMB,
-                  visibilityMI,
-                  windMPH,
-                  windDir,
-                  weatherPrimaryCoded,
-                },
+          .then(({ success, error, response }) => {
+            if (!success) throw new Error(error.description)
+            const {
+              place: { city },
+              ob: {
+                dewpointC,
+                tempC,
+                humidity,
+                pressureMB,
+                visibilityMI,
+                windMPH,
+                windDir,
+                weatherPrimaryCoded,
               },
-            }) => {
-              setCurrentLocationData(prevData => ({
-                ...prevData,
-                city: city.split('/')[0],
-                weatherInfo: {
-                  dewpointC,
-                  tempC,
-                  humidity,
-                  pressureMB,
-                  visibilityMI,
-                  windMPH: windMPH ?? 'unknown',
-                  windDir: windDir ?? 'unknown',
-                  weatherInfo: weatherCodes[weatherPrimaryCoded.slice(2)],
-                },
-              }))
-            }
-          )
+            } = response
+            setCurrentLocationData(prevData => ({
+              ...prevData,
+              city: city.split('/')[0],
+              weatherInfo: {
+                dewpointC,
+                tempC,
+                humidity,
+                pressureMB,
+                visibilityMI,
+                windMPH: windMPH ?? 'unknown',
+                windDir: windDir ?? 'unknown',
+                weatherInfo: weatherCodes[weatherPrimaryCoded.slice(2)],
+              },
+            }))
+          })
           .then(() =>
             fetch(
               `https://aerisweather1.p.rapidapi.com/forecasts/${
@@ -98,7 +96,10 @@ export function CurrentPosition(props) {
             }))
             setShowModal(false)
           })
-          .catch(err => console.error(err))
+          .catch(err => {
+            window.alert(err)
+            console.error(err)
+          })
       },
       function (error) {
         setShowModal(true)

@@ -21,7 +21,7 @@ export default function Search({ placeholder }) {
   }
   function submitLocation(e) {
     if (e.key !== 'Enter') return
-    ctx.updateInputLocation(e.target.value.match(/[a-z]+/gi))
+    ctx.updateInputLocation(e.target.value.match(/[a-z]+/gi))()
   }
   function handleFocus1() {
     setShowWarning(prevVal => !prevVal)
