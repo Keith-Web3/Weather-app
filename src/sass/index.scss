@@ -38,7 +38,6 @@ body {
         grid-area: two;
         & > * {
           max-width: 800px;
-          width: max-content;
           margin-inline: auto;
         }
       }
