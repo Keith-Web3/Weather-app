@@ -36,7 +36,7 @@ export default function App() {
         <Highlights />
         {ctx.showModal && (
           <Modal eventlisteners={[null, ctx.reRender]} show={false}>
-            Please enable location to use this app
+            {ctx.errorMessage || 'Please enable location to use this app'}
           </Modal>
         )}
       </section>

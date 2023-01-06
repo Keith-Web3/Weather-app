@@ -8,6 +8,7 @@ const currentData = React.createContext({
   showModal: false,
   inputLocation: [],
   updateInputLocation: () => {},
+  errorMessage: '',
 })
 
 export function CurrentPosition(props) {
@@ -19,6 +20,7 @@ export function CurrentPosition(props) {
   const [inputLocation, setInputLocation] = useState([])
   const [causeRerender, setCauseRerender] = useState(0)
   const [showModal, setShowModal] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
   function updateInputLocation(val) {
     return () => setInputLocation(val)
   }
@@ -48,7 +50,11 @@ export function CurrentPosition(props) {
             ),
           ])
           .then(([{ data: data1 }, { data: data2 }]) => {
-            if (!(data1.success && data2.success)) throw new Error('Try again')
+            console.log(data1, data2)
+            if (data1.error !== null || data2.error !== null)
+              throw new Error(
+                data1.error?.description || data2.error?.description
+              )
             const {
               place: { city },
               ob: {
@@ -88,7 +94,8 @@ export function CurrentPosition(props) {
             setShowModal(false)
           })
           .catch(err => {
-            window.alert(err)
+            setErrorMessage(err.message)
+            setShowModal(true)
             console.error(err)
           })
       },
@@ -116,6 +123,7 @@ export function CurrentPosition(props) {
         },
         inputLocation: inputLocation,
         updateInputLocation: updateInputLocation,
+        errorMessage: errorMessage,
       }}
     >
       {props.children}
