@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import weatherCodes from './weatherCodes'
 const currentData = React.createContext({
   loc: [],
@@ -24,27 +25,30 @@ export function CurrentPosition(props) {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       function ({ coords: { latitude, longitude } }) {
-        const options = {
-          method: 'GET',
+        const url = axios.create({
+          baseURL: 'https://aerisweather1.p.rapidapi.com',
           headers: {
             'X-RapidAPI-Key':
               '8f091fb8d1mshafae696642602e9p120e55jsnf8db7eeec3a5',
             'X-RapidAPI-Host': 'aerisweather1.p.rapidapi.com',
           },
-        }
+        })
 
-        fetch(
-          `https://aerisweather1.p.rapidapi.com/observations/${
-            inputLocation?.[0] || latitude
-          },${inputLocation?.[1] || longitude}`,
-          options
-        )
-          .then(response => {
-            if (!response.ok) throw new Error('Try again')
-            return response.json()
-          })
-          .then(({ success, error, response }) => {
-            if (!success) throw new Error(error.description)
+        axios
+          .all([
+            url.request(
+              `/observations/${inputLocation?.[0] || latitude},${
+                inputLocation?.[1] || longitude
+              }`
+            ),
+            url.request(
+              `/forecasts/${inputLocation?.[0] || latitude},${
+                inputLocation?.[1] || longitude
+              }`
+            ),
+          ])
+          .then(([{ data: data1 }, { data: data2 }]) => {
+            if (!(data1.success && data2.success)) throw new Error('Try again')
             const {
               place: { city },
               ob: {
@@ -57,7 +61,15 @@ export function CurrentPosition(props) {
                 windDir,
                 weatherPrimaryCoded,
               },
-            } = response
+            } = data1.response
+            const [{ periods }] = data2.response
+            const arr = periods.map(
+              ({ minTempC, maxTempC, weatherPrimaryCoded }) => [
+                minTempC,
+                maxTempC,
+                weatherCodes[weatherPrimaryCoded.match(/:\w+$/)[0].slice(1)],
+              ]
+            )
             setCurrentLocationData(prevData => ({
               ...prevData,
               city: city.split('/')[0],
@@ -71,27 +83,6 @@ export function CurrentPosition(props) {
                 windDir: windDir ?? 'unknown',
                 weatherInfo: weatherCodes[weatherPrimaryCoded.slice(2)],
               },
-            }))
-          })
-          .then(() =>
-            fetch(
-              `https://aerisweather1.p.rapidapi.com/forecasts/${
-                inputLocation?.[0] || latitude
-              },${inputLocation?.[1] || longitude}`,
-              options
-            )
-          )
-          .then(response => response.json())
-          .then(({ response: [{ periods }] }) => {
-            const arr = periods.map(
-              ({ minTempC, maxTempC, weatherPrimaryCoded }) => [
-                minTempC,
-                maxTempC,
-                weatherCodes[weatherPrimaryCoded.match(/:\w+$/)[0].slice(1)],
-              ]
-            )
-            setCurrentLocationData(prevData => ({
-              ...prevData,
               forecast: arr,
             }))
             setShowModal(false)
