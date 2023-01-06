@@ -16,7 +16,7 @@ export default function CurrentConditions({
       }
     )
   }, [])
-  if (weatherCondition === undefined) return //prevent importing an undefined path. Cause of internal react error WARNING
+
   return (
     <section className="section--1" style={{ display: showNav[1] }}>
       <Header handleShowNav={handleShowNav} />
