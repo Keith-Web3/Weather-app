@@ -8,15 +8,15 @@ export default function CurrentConditions({
   handleShowNav,
   showNav,
 }) {
-  if (weatherCondition === undefined) return //prevent importing an undefined path. Cause of internal react error WARNING
   const [weatherImg, setWeatherImg] = useState('')
   useEffect(() => {
-    import(`../assets/${weatherCondition}.png`).then(
+    import(`../assets/${weatherCondition || 'Clear'}.png`).then(
       ({ default: weatherImg }) => {
         setWeatherImg(weatherImg)
       }
     )
   }, [])
+  if (weatherCondition === undefined) return //prevent importing an undefined path. Cause of internal react error WARNING
   return (
     <section className="section--1" style={{ display: showNav[1] }}>
       <Header handleShowNav={handleShowNav} />

@@ -34,13 +34,11 @@ export default function App() {
       <section className="section--2">
         <Forecasts />
         <Highlights />
-        {ctx.showModal &&
-          ReactDOM.createPortal(
-            <Modal eventlisteners={[null, ctx.reRender]} show={false}>
-              Please enable location to use this app
-            </Modal>,
-            document.getElementById('modal-root')
-          )}
+        {ctx.showModal && (
+          <Modal eventlisteners={[null, ctx.reRender]} show={false}>
+            Please enable location to use this app
+          </Modal>
+        )}
       </section>
     </main>
   )

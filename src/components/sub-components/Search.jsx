@@ -58,14 +58,12 @@ export default function Search({ placeholder }) {
       >
         Search
       </Button>
-      {showWarning &&
-        ReactDOM.createPortal(
-          <Modal eventlisteners={[handleFocus2, handleFocus1]} show={true}>
-            Input location in "'state' 'country-code'" format e.g 'paris fr' or
-            'lagos ng' e.t.c
-          </Modal>,
-          document.getElementById('modal-root')
-        )}
+      {showWarning && (
+        <Modal eventlisteners={[handleFocus2, handleFocus1]} show={true}>
+          Input location in "'state' 'country-code'" format e.g 'paris fr' or
+          'lagos ng' e.t.c
+        </Modal>
+      )}
     </div>
   )
 }

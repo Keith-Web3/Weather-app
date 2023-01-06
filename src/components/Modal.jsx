@@ -1,10 +1,11 @@
 import React from 'react'
 import Button from './UI/Button'
+import ReactDOM from 'react-dom'
 import '../sass/modal.scss'
 
 export default function Modal({ children, eventlisteners, show }) {
   window.scrollTo(0, 0)
-  return (
+  return ReactDOM.createPortal(
     <div className="modal">
       <div className="modal__backdrop"></div>
       <div className="modal__content">
@@ -24,6 +25,7 @@ export default function Modal({ children, eventlisteners, show }) {
           OK
         </Button>
       </div>
-    </div>
+    </div>,
+    document.getElementById('modal-root')
   )
 }
