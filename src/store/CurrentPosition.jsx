@@ -24,6 +24,7 @@ export function CurrentPosition(props) {
   function updateInputLocation(val) {
     return () => setInputLocation(val)
   }
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       function ({ coords: { latitude, longitude } }) {
@@ -36,25 +37,20 @@ export function CurrentPosition(props) {
           },
         })
 
+        const query1 = inputLocation?.[0] || latitude
+        const query2 = inputLocation?.[1] || longitude
+
         axios
           .all([
-            url.request(
-              `/observations/${inputLocation?.[0] || latitude},${
-                inputLocation?.[1] || longitude
-              }`
-            ),
-            url.request(
-              `/forecasts/${inputLocation?.[0] || latitude},${
-                inputLocation?.[1] || longitude
-              }`
-            ),
+            url.request(`/observations/${query1},${query2}`),
+            url.request(`/forecasts/${query1},${query2}`),
           ])
           .then(([{ data: data1 }, { data: data2 }]) => {
-            console.log(data1, data2)
             if (data1.error !== null || data2.error !== null)
               throw new Error(
                 data1.error?.description || data2.error?.description
               )
+
             const {
               place: { city },
               ob: {
@@ -68,7 +64,9 @@ export function CurrentPosition(props) {
                 weatherPrimaryCoded,
               },
             } = data1.response
+
             const [{ periods }] = data2.response
+
             const arr = periods.map(
               ({ minTempC, maxTempC, weatherPrimaryCoded }) => [
                 minTempC,
