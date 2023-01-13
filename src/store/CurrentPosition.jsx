@@ -26,13 +26,13 @@ export function CurrentPosition(props) {
   }
 
   useEffect(() => {
+    console.log(import.meta.env)
     navigator.geolocation.getCurrentPosition(
       function ({ coords: { latitude, longitude } }) {
         const url = axios.create({
           baseURL: 'https://aerisweather1.p.rapidapi.com',
           headers: {
-            'X-RapidAPI-Key':
-              '8f091fb8d1mshafae696642602e9p120e55jsnf8db7eeec3a5',
+            'X-RapidAPI-Key': import.meta.env.VITE_KEY,
             'X-RapidAPI-Host': 'aerisweather1.p.rapidapi.com',
           },
         })
